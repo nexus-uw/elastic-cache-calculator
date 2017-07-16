@@ -112,17 +112,25 @@ view : Model -> Html Msg
 view model =
   div []
     [
+
+      a [href "https://github.com/nexus-uw/elastic-cache-calculator"] [
+        img[style [("position", "absolute"), ("top","0"), ("right", "0"), ("border","0")], src "https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67", alt "Fork me on GitHub"][]
+      ],
       h1 [][text "A Crummy Elm Based AWS ElasticCache Calculator"],
       input [ type_ "number", placeholder "Total Desired Cluster Size (GB)", onInput Size,  Html.Attributes.min "0" ] [],
-      h2 [][text "Suggested Cluster Sizes"],
+      h2 [][text "Suggested Cluster Size(s)"],
       div [] (List.map break (Dict.toList (List.foldl mergeResults emptyDict model.breakDown))),
       div [] [text (
         "TOTAL: " ++
         (toString (List.foldl sumDbs 0 model.breakDown))
         ++ "GB" ++ " $" ++
-        (toString (round (30 * 24 * (List.foldl costDbs 0 model.breakDown))))
-        ++ " (USD Per Month) "
-        )]
+        (toString (round (24 * (List.foldl costDbs 0 model.breakDown))))
+        ++ " (USD Per Day) "
+        )],
+      h5 [][text "Disclaimer"],
+
+      div [][text "Prices as of July 16 2017 for US-East-1"],
+      div [][text "This is more of a learning exprience for Elm for me than a legit tool. Use the results at your own risk."]
     ]
 
 break : (String, Int) -> Html msg
