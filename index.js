@@ -8260,6 +8260,36 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _user$project$Main$radio = F2(
+	function (value, msg) {
+		return A2(
+			_elm_lang$html$Html$label,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$type_('radio'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$name('network-size'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(msg),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(value),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _user$project$Main$break = function (db) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -8295,39 +8325,15 @@ var _user$project$Main$sumDbs = F2(
 	function (db, count) {
 		return db.size + count;
 	});
-var _user$project$Main$fun = F2(
-	function (sum, allCoins) {
-		var fn = F2(
-			function (coin, m) {
-				return {
-					remaining: m.remaining - (_elm_lang$core$Basics$toFloat(
-						(_elm_lang$core$Native_Utils.eq(coin.size, 0.5) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / coin.size)) * coin.size),
-					coins: A2(
-						_elm_lang$core$List$append,
-						m.coins,
-						A2(
-							_elm_lang$core$List$repeat,
-							(_elm_lang$core$Native_Utils.eq(coin.size, 0.5) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / coin.size),
-							coin))
-				};
-			});
-		return A3(
-			_elm_lang$core$List$foldr,
-			fn,
-			{
-				remaining: sum,
-				coins: {ctor: '[]'}
-			},
-			allCoins).coins;
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {size: a, breakDown: b, network: c};
 	});
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {size: a, breakDown: b};
-	});
-var _user$project$Main$model = A2(
+var _user$project$Main$model = A3(
 	_user$project$Main$Model,
 	0,
-	{ctor: '[]'});
+	{ctor: '[]'},
+	'All');
 var _user$project$Main$Shit = F2(
 	function (a, b) {
 		return {remaining: a, coins: b};
@@ -8335,6 +8341,35 @@ var _user$project$Main$Shit = F2(
 var _user$project$Main$DB = F4(
 	function (a, b, c, d) {
 		return {name: a, size: b, price: c, network: d};
+	});
+var _user$project$Main$fun = F2(
+	function (sum, allDbs) {
+		var minSize = A2(
+			_elm_lang$core$Maybe$withDefault,
+			A4(_user$project$Main$DB, 'cache.t2.micro', 0.5, 1.7e-2, 'Low to Moderate'),
+			_elm_lang$core$List$head(allDbs)).size;
+		var fn = F2(
+			function (db, m) {
+				return {
+					remaining: m.remaining - (_elm_lang$core$Basics$toFloat(
+						(_elm_lang$core$Native_Utils.eq(db.size, minSize) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / db.size)) * db.size),
+					result: A2(
+						_elm_lang$core$List$append,
+						m.result,
+						A2(
+							_elm_lang$core$List$repeat,
+							(_elm_lang$core$Native_Utils.eq(db.size, minSize) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / db.size),
+							db))
+				};
+			});
+		return A3(
+			_elm_lang$core$List$foldr,
+			fn,
+			{
+				remaining: sum,
+				result: {ctor: '[]'}
+			},
+			allDbs).result;
 	});
 var _user$project$Main$dbs = {
 	ctor: '::',
@@ -8420,20 +8455,46 @@ var _user$project$Main$dbs = {
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		var newInt = A2(
-			_elm_lang$core$Result$withDefault,
-			0,
-			_elm_lang$core$String$toInt(_p0._0));
-		return _elm_lang$core$Native_Utils.update(
-			model,
-			{
-				size: newInt,
-				breakDown: A2(
-					_user$project$Main$fun,
-					_elm_lang$core$Basics$toFloat(newInt),
-					_user$project$Main$dbs)
-			});
+		if (_p0.ctor === 'Size') {
+			var newInt = A2(
+				_elm_lang$core$Result$withDefault,
+				0,
+				_elm_lang$core$String$toInt(_p0._0));
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					size: newInt,
+					breakDown: A2(
+						_user$project$Main$fun,
+						_elm_lang$core$Basics$toFloat(newInt),
+						A2(
+							_elm_lang$core$List$filter,
+							function (x) {
+								return _elm_lang$core$Native_Utils.eq(x.network, model.network) || _elm_lang$core$Native_Utils.eq(model.network, 'All');
+							},
+							_user$project$Main$dbs))
+				});
+		} else {
+			var _p1 = _p0._0;
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					breakDown: A2(
+						_user$project$Main$fun,
+						_elm_lang$core$Basics$toFloat(model.size),
+						A2(
+							_elm_lang$core$List$filter,
+							function (x) {
+								return _elm_lang$core$Native_Utils.eq(x.network, _p1) || _elm_lang$core$Native_Utils.eq(_p1, 'All');
+							},
+							_user$project$Main$dbs)),
+					network: _p1
+				});
+		}
 	});
+var _user$project$Main$LimitTo = function (a) {
+	return {ctor: 'LimitTo', _0: a};
+};
 var _user$project$Main$Size = function (a) {
 	return {ctor: 'Size', _0: a};
 };
@@ -8496,138 +8557,154 @@ var _user$project$Main$view = function (model) {
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$a,
+						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$href('https://github.com/nexus-uw/elastic-cache-calculator'),
+							_0: _elm_lang$html$Html_Attributes$class('container'),
 							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$img,
+								_elm_lang$html$Html$a,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$style(
+									_0: _elm_lang$html$Html_Attributes$href('https://github.com/nexus-uw/elastic-cache-calculator'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$img,
 										{
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
-												_1: {
+											_0: _elm_lang$html$Html_Attributes$style(
+												{
 													ctor: '::',
-													_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+													_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
 													_1: {
 														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: 'border', _1: '0'},
-														_1: {ctor: '[]'}
+														_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'border', _1: '0'},
+																_1: {ctor: '[]'}
+															}
+														}
 													}
-												}
-											}
-										}),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$src('https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$alt('Fork me on GitHub'),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{ctor: '[]'}),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$h1,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('A Crummy Elm Based AWS ElasticCache Calculator'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$input,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$type_('number'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$placeholder('Total Desired Cluster Size (GB)'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$Size),
+												}),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$min('0'),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$src('https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$alt('Fork me on GitHub'),
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}
-								},
-								{ctor: '[]'}),
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}),
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$h2,
+									_elm_lang$html$Html$h1,
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('Suggested Cluster Size(s)'),
+										_0: _elm_lang$html$Html$text('A Crummy Elm Based AWS ElasticCache Calculator'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$div,
-										{ctor: '[]'},
-										A2(
-											_elm_lang$core$List$map,
-											_user$project$Main$break,
-											_elm_lang$core$Dict$toList(
-												A3(_elm_lang$core$List$foldl, _user$project$Main$mergeResults, _user$project$Main$emptyDict, model.breakDown)))),
+										_elm_lang$html$Html$input,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$type_('number'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$placeholder('Total Desired Cluster Size (GB)'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$Size),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$min('0'),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										},
+										{ctor: '[]'}),
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$div,
-											{ctor: '[]'},
+											_elm_lang$html$Html$fieldset,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text(
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														'TOTAL: ',
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(
-																A3(_elm_lang$core$List$foldl, _user$project$Main$sumDbs, 0, model.breakDown)),
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																' GB',
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	' $',
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		_elm_lang$core$Basics$toString(
-																			_elm_lang$core$Basics$round(
-																				24 * A3(_elm_lang$core$List$foldl, _user$project$Main$costDbs, 0, model.breakDown))),
-																		' (USD Per Day) ')))))),
+												_0: _elm_lang$html$Html_Attributes$class('fieldgroup'),
 												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$div,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Cluster Network Type'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_user$project$Main$radio,
+														'All',
+														_user$project$Main$LimitTo('All')),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_user$project$Main$radio,
+															'Low to Moderate',
+															_user$project$Main$LimitTo('Low to Moderate')),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_user$project$Main$radio,
+																'Moderate',
+																_user$project$Main$LimitTo('Moderate')),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_user$project$Main$radio,
+																	'High',
+																	_user$project$Main$LimitTo('High')),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_user$project$Main$radio,
+																		'10 Gigabit',
+																		_user$project$Main$LimitTo('10 Gigabit')),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_elm_lang$html$Html$h5,
+												_elm_lang$html$Html$h2,
 												{ctor: '[]'},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text('Disclaimer'),
+													_0: _elm_lang$html$Html$text('Suggested Cluster Size(s)'),
 													_1: {ctor: '[]'}
 												}),
 											_1: {
@@ -8635,11 +8712,11 @@ var _user$project$Main$view = function (model) {
 												_0: A2(
 													_elm_lang$html$Html$div,
 													{ctor: '[]'},
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html$text('Prices as of July 16 2017 for US-East-1'),
-														_1: {ctor: '[]'}
-													}),
+													A2(
+														_elm_lang$core$List$map,
+														_user$project$Main$break,
+														_elm_lang$core$Dict$toList(
+															A3(_elm_lang$core$List$foldl, _user$project$Main$mergeResults, _user$project$Main$emptyDict, model.breakDown)))),
 												_1: {
 													ctor: '::',
 													_0: A2(
@@ -8647,18 +8724,79 @@ var _user$project$Main$view = function (model) {
 														{ctor: '[]'},
 														{
 															ctor: '::',
-															_0: _elm_lang$html$Html$text('This is more of a learning exprience for Elm for me than a legit tool. Use the results at your own risk.'),
+															_0: _elm_lang$html$Html$text(
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	'TOTAL: ',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		_elm_lang$core$Basics$toString(
+																			A3(_elm_lang$core$List$foldl, _user$project$Main$sumDbs, 0, model.breakDown)),
+																		' GB'))),
 															_1: {ctor: '[]'}
 														}),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$div,
+															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text(
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' $',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(
+																				_elm_lang$core$Basics$round(
+																					24 * A3(_elm_lang$core$List$foldl, _user$project$Main$costDbs, 0, model.breakDown))),
+																			' (USD Per Day) '))),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$h5,
+																{ctor: '[]'},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text('Disclaimer'),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$div,
+																	{ctor: '[]'},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text('Prices as of July 16 2017 for US-East-1'),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$div,
+																		{ctor: '[]'},
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html$text('This is more of a learning exprience for Elm for me than a legit tool. Use the results at your own risk.'),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
 												}
 											}
 										}
 									}
 								}
 							}
-						}
-					}
+						}),
+					_1: {ctor: '[]'}
 				}
 			}
 		});
