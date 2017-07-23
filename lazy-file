@@ -1,0 +1,35 @@
+<img class="image_bak" src="http://www.linuxnix.com/wp-content/uploads/2016/05/ElasticCache.png" alt="" width="120" height="120">
+<img class="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bright_anime_eyes.svg/1280px-Bright_anime_eyes.svg.png" alt="" width="120" height="120">
+
+
+ .image_bak {
+   position: absolute;
+   width: 120px;
+   height: 120px;
+ }
+ 
+ .image {
+   position: absolute;
+   width: 120px;
+   height: 120px;
+   animation: spin 16s linear infinite;
+ }
+ 
+ @-moz-keyframes spin {
+   100% {
+     -moz-transform: rotate(360deg);
+   }
+ }
+ 
+ @-webkit-keyframes spin {
+   100% {
+     -webkit-transform: rotate(360deg);
+   }
+ }
+ 
+ @keyframes spin {
+   100% {
+     -webkit-transform: rotate(360deg);
+     transform: rotate(360deg);
+   }
+ }
