@@ -8444,140 +8444,153 @@ var _user$project$Main$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$a,
+				_elm_lang$html$Html$img,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$href('https://github.com/nexus-uw/elastic-cache-calculator'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$img,
-						{
+					_0: _elm_lang$html$Html_Attributes$class('image_bak'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$src('ElasticCache.png'),
+						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$style(
-								{
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'border', _1: '0'},
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}),
+							_0: _elm_lang$html$Html_Attributes$alt('elastic cache logo'),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$src('https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67'),
+								_0: _elm_lang$html$Html_Attributes$width(120),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$alt('Fork me on GitHub'),
+									_0: _elm_lang$html$Html_Attributes$height(120),
 									_1: {ctor: '[]'}
 								}
 							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}),
+						}
+					}
+				},
+				{ctor: '[]'}),
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$h1,
-					{ctor: '[]'},
+					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('A Crummy Elm Based AWS ElasticCache Calculator'),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$input,
-						{
+						_0: _elm_lang$html$Html_Attributes$class('image'),
+						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('number'),
+							_0: _elm_lang$html$Html_Attributes$src('anime-eyes.png'),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder('Total Desired Cluster Size (GB)'),
+								_0: _elm_lang$html$Html_Attributes$alt('weibo'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$Size),
+									_0: _elm_lang$html$Html_Attributes$width(120),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$min('0'),
+										_0: _elm_lang$html$Html_Attributes$height(120),
 										_1: {ctor: '[]'}
 									}
 								}
 							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$a,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$href('https://github.com/nexus-uw/elastic-cache-calculator'),
+							_1: {ctor: '[]'}
 						},
-						{ctor: '[]'}),
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$img,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$style(
+										{
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'border', _1: '0'},
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$src('https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$alt('Fork me on GitHub'),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$h2,
+							_elm_lang$html$Html$h1,
 							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Suggested Cluster Size(s)'),
+								_0: _elm_lang$html$Html$text('A Crummy Elm Based AWS ElasticCache Calculator'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$div,
-								{ctor: '[]'},
-								A2(
-									_elm_lang$core$List$map,
-									_user$project$Main$break,
-									_elm_lang$core$Dict$toList(
-										A3(_elm_lang$core$List$foldl, _user$project$Main$mergeResults, _user$project$Main$emptyDict, model.breakDown)))),
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('number'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$placeholder('Total Desired Cluster Size (GB)'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$Size),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$min('0'),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$div,
+									_elm_lang$html$Html$h2,
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text(
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												'TOTAL: ',
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(
-														A3(_elm_lang$core$List$foldl, _user$project$Main$sumDbs, 0, model.breakDown)),
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														'GB',
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															' $',
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																_elm_lang$core$Basics$toString(
-																	_elm_lang$core$Basics$round(
-																		24 * A3(_elm_lang$core$List$foldl, _user$project$Main$costDbs, 0, model.breakDown))),
-																' (USD Per Day) ')))))),
+										_0: _elm_lang$html$Html$text('Suggested Cluster Size(s)'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$h5,
+										_elm_lang$html$Html$div,
 										{ctor: '[]'},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Disclaimer'),
-											_1: {ctor: '[]'}
-										}),
+										A2(
+											_elm_lang$core$List$map,
+											_user$project$Main$break,
+											_elm_lang$core$Dict$toList(
+												A3(_elm_lang$core$List$foldl, _user$project$Main$mergeResults, _user$project$Main$emptyDict, model.breakDown)))),
 									_1: {
 										ctor: '::',
 										_0: A2(
@@ -8585,20 +8598,61 @@ var _user$project$Main$view = function (model) {
 											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Prices as of July 16 2017 for US-East-1'),
+												_0: _elm_lang$html$Html$text(
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'TOTAL: ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(
+																A3(_elm_lang$core$List$foldl, _user$project$Main$sumDbs, 0, model.breakDown)),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' GB',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	' $',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		_elm_lang$core$Basics$toString(
+																			_elm_lang$core$Basics$round(
+																				24 * A3(_elm_lang$core$List$foldl, _user$project$Main$costDbs, 0, model.breakDown))),
+																		' (USD Per Day) ')))))),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_elm_lang$html$Html$div,
+												_elm_lang$html$Html$h5,
 												{ctor: '[]'},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text('This is more of a learning exprience for Elm for me than a legit tool. Use the results at your own risk.'),
+													_0: _elm_lang$html$Html$text('Disclaimer'),
 													_1: {ctor: '[]'}
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$div,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Prices as of July 16 2017 for US-East-1'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$div,
+														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('This is more of a learning exprience for Elm for me than a legit tool. Use the results at your own risk.'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									}
 								}
