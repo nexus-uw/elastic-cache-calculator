@@ -41,43 +41,47 @@ type alias Shit = {
 fun: Float -> List DB -> List DB
 fun sum allCoins =
   let
-    fn coin m = { remaining = m.remaining - ((toFloat ((if coin.size == 0.5 then ceiling else floor) (m.remaining / coin.size))) * coin.size), coins = (List.append m.coins (List.repeat  ((if coin.size == 0.5 then ceiling else floor) (m.remaining / coin.size)) coin)) }
+    fn coin m = {
+      remaining = m.remaining - ((toFloat ((if coin.size == 0.5 then ceiling else floor) (m.remaining / coin.size))) * coin.size),
+      coins = (List.append m.coins (List.repeat  ((if coin.size == 0.5 then ceiling else floor) (m.remaining / coin.size)) coin))
+    }
   in
    ( List.foldr fn {remaining = sum , coins = []}  allCoins).coins
 
 type alias DB = {
   name: String,
   size: Float,
-  price: Float
+  price: Float,
+  network: String
 }
 dbs : List DB
 dbs = [
-  DB "cache.t2.micro" 0.5 0.017,
-  DB "cache.t2.small" 1.55 0.034,
-  DB "cache.m3.medium" 2.78 0.090,
-  DB "cache.t2.medium" 3.22 0.068,
+  DB "cache.t2.micro" 0.5 0.017 "Low to Moderate",
+  DB "cache.t2.small" 1.55 0.034 "Low to Moderate",
+  DB "cache.m3.medium" 2.78 0.090 "Moderate",
+  DB "cache.t2.medium" 3.22 0.068 "Low to Moderate",
 
-  DB "cache.m3.large" 6.05 0.182,
-  DB "cache.m4.large" 6.42 0.156,
-  DB "cache.r3.large" 13.5 0.228,
+  DB "cache.m3.large" 6.05 0.182 "Moderate",
+  DB "cache.m4.large" 6.42 0.156 "Moderate",
+  DB "cache.r3.large" 13.5 0.228 "Moderate",
 
-  DB "cache.m3.xlarge" 13.3 0.364,
-  DB "cache.m4.xlarge" 14.28 0.311,
-  DB "cache.r3.xlarge" 28.4 0.455,
+  DB "cache.m3.xlarge" 13.3 0.364 "High",
+  DB "cache.m4.xlarge" 14.28 0.311 "High",
+  DB "cache.r3.xlarge" 28.4 0.455 "Moderate",
 
-  DB "cache.m3.2xlarge" 27.9 0.728,
-  DB "cache.m4.2xlarge" 29.70 0.623,
-  DB "cache.r3.2xlarge" 58.2 0.910,
+  DB "cache.m3.2xlarge" 27.9 0.728 "High",
+  DB "cache.m4.2xlarge" 29.70 0.623 "High",
+  DB "cache.r3.2xlarge" 58.2 0.910 "High",
 
-  DB "cache.m3.2xlarge" 27.9 0.728,
-  DB "cache.m4.2xlarge" 29.70 0.623,
-  DB "cache.r3.2xlarge" 58.2 0.910,
+  DB "cache.m3.2xlarge" 27.9 0.728 "High",
+  DB "cache.m4.2xlarge" 29.70 0.623 "High",
+  DB "cache.r3.2xlarge" 58.2 0.910 "High",
 
-  DB "cache.m4.4xlarge" 60.78 1.245,
-  DB "cache.r3.4xlarge" 118 1.820,
+  DB "cache.m4.4xlarge" 60.78 1.245 "High",
+  DB "cache.r3.4xlarge" 118 1.820 "High",
 
-  DB "cache.m4.10xlarge" 154.64 3.112,
-  DB "cache.r3.8xlarge" 237 3.640
+  DB "cache.m4.10xlarge" 154.64 3.112 "10 Gigabit",
+  DB "cache.r3.8xlarge" 237 3.640 "10 Gigabit"
  ]
 
 
@@ -123,7 +127,7 @@ view model =
       div [] [text (
         "TOTAL: " ++
         (toString (List.foldl sumDbs 0 model.breakDown))
-        ++ "GB" ++ " $" ++
+        ++ " GB" ++ " $" ++
         (toString (round (24 * (List.foldl costDbs 0 model.breakDown))))
         ++ " (USD Per Day) "
         )],
