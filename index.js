@@ -8325,6 +8325,10 @@ var _user$project$Main$sumDbs = F2(
 	function (db, count) {
 		return db.size + count;
 	});
+var _user$project$Main$compareByUnitCost = F2(
+	function (a, b) {
+		return A2(_elm_lang$core$Basics$compare, a.size / a.price, b.size / b.price);
+	});
 var _user$project$Main$Model = F3(
 	function (a, b, c) {
 		return {size: a, breakDown: b, network: c};
@@ -8371,67 +8375,71 @@ var _user$project$Main$fun = F2(
 			},
 			allDbs).result;
 	});
-var _user$project$Main$dbs = {
-	ctor: '::',
-	_0: A4(_user$project$Main$DB, 'cache.t2.micro', 0.5, 1.7e-2, 'Low to Moderate'),
-	_1: {
+var _user$project$Main$dbs = A2(
+	_elm_lang$core$List$sortWith,
+	_user$project$Main$compareByUnitCost,
+	{
 		ctor: '::',
-		_0: A4(_user$project$Main$DB, 'cache.t2.small', 1.55, 3.4e-2, 'Low to Moderate'),
+		_0: A4(_user$project$Main$DB, 'cache.t2.micro', 0.5, 1.7e-2, 'Low to Moderate'),
 		_1: {
 			ctor: '::',
-			_0: A4(_user$project$Main$DB, 'cache.m3.medium', 2.78, 9.0e-2, 'Moderate'),
+			_0: A4(_user$project$Main$DB, 'cache.t2.small', 1.55, 3.4e-2, 'Low to Moderate'),
 			_1: {
 				ctor: '::',
-				_0: A4(_user$project$Main$DB, 'cache.t2.medium', 3.22, 6.8e-2, 'Low to Moderate'),
+				_0: A4(_user$project$Main$DB, 'cache.m3.medium', 2.78, 9.0e-2, 'Moderate'),
 				_1: {
 					ctor: '::',
-					_0: A4(_user$project$Main$DB, 'cache.m3.large', 6.05, 0.182, 'Moderate'),
+					_0: A4(_user$project$Main$DB, 'cache.t2.medium', 3.22, 6.8e-2, 'Low to Moderate'),
 					_1: {
 						ctor: '::',
-						_0: A4(_user$project$Main$DB, 'cache.m4.large', 6.42, 0.156, 'Moderate'),
+						_0: A4(_user$project$Main$DB, 'cache.m3.large', 6.05, 0.182, 'Moderate'),
 						_1: {
 							ctor: '::',
-							_0: A4(_user$project$Main$DB, 'cache.r3.large', 13.5, 0.228, 'Moderate'),
+							_0: A4(_user$project$Main$DB, 'cache.m4.large', 6.42, 0.156, 'Moderate'),
 							_1: {
 								ctor: '::',
-								_0: A4(_user$project$Main$DB, 'cache.m3.xlarge', 13.3, 0.364, 'High'),
+								_0: A4(_user$project$Main$DB, 'cache.r3.large', 13.5, 0.228, 'Moderate'),
 								_1: {
 									ctor: '::',
-									_0: A4(_user$project$Main$DB, 'cache.m4.xlarge', 14.28, 0.311, 'High'),
+									_0: A4(_user$project$Main$DB, 'cache.m3.xlarge', 13.3, 0.364, 'High'),
 									_1: {
 										ctor: '::',
-										_0: A4(_user$project$Main$DB, 'cache.r3.xlarge', 28.4, 0.455, 'Moderate'),
+										_0: A4(_user$project$Main$DB, 'cache.m4.xlarge', 14.28, 0.311, 'High'),
 										_1: {
 											ctor: '::',
-											_0: A4(_user$project$Main$DB, 'cache.m3.2xlarge', 27.9, 0.728, 'High'),
+											_0: A4(_user$project$Main$DB, 'cache.r3.xlarge', 28.4, 0.455, 'Moderate'),
 											_1: {
 												ctor: '::',
-												_0: A4(_user$project$Main$DB, 'cache.m4.2xlarge', 29.7, 0.623, 'High'),
+												_0: A4(_user$project$Main$DB, 'cache.m3.2xlarge', 27.9, 0.728, 'High'),
 												_1: {
 													ctor: '::',
-													_0: A4(_user$project$Main$DB, 'cache.r3.2xlarge', 58.2, 0.91, 'High'),
+													_0: A4(_user$project$Main$DB, 'cache.m4.2xlarge', 29.7, 0.623, 'High'),
 													_1: {
 														ctor: '::',
-														_0: A4(_user$project$Main$DB, 'cache.m3.2xlarge', 27.9, 0.728, 'High'),
+														_0: A4(_user$project$Main$DB, 'cache.r3.2xlarge', 58.2, 0.91, 'High'),
 														_1: {
 															ctor: '::',
-															_0: A4(_user$project$Main$DB, 'cache.m4.2xlarge', 29.7, 0.623, 'High'),
+															_0: A4(_user$project$Main$DB, 'cache.m3.2xlarge', 27.9, 0.728, 'High'),
 															_1: {
 																ctor: '::',
-																_0: A4(_user$project$Main$DB, 'cache.r3.2xlarge', 58.2, 0.91, 'High'),
+																_0: A4(_user$project$Main$DB, 'cache.m4.2xlarge', 29.7, 0.623, 'High'),
 																_1: {
 																	ctor: '::',
-																	_0: A4(_user$project$Main$DB, 'cache.m4.4xlarge', 60.78, 1.245, 'High'),
+																	_0: A4(_user$project$Main$DB, 'cache.r3.2xlarge', 58.2, 0.91, 'High'),
 																	_1: {
 																		ctor: '::',
-																		_0: A4(_user$project$Main$DB, 'cache.r3.4xlarge', 118, 1.82, 'High'),
+																		_0: A4(_user$project$Main$DB, 'cache.m4.4xlarge', 60.78, 1.245, 'High'),
 																		_1: {
 																			ctor: '::',
-																			_0: A4(_user$project$Main$DB, 'cache.m4.10xlarge', 154.64, 3.112, '10 Gigabit'),
+																			_0: A4(_user$project$Main$DB, 'cache.r3.4xlarge', 118, 1.82, 'High'),
 																			_1: {
 																				ctor: '::',
-																				_0: A4(_user$project$Main$DB, 'cache.r3.8xlarge', 237, 3.64, '10 Gigabit'),
-																				_1: {ctor: '[]'}
+																				_0: A4(_user$project$Main$DB, 'cache.m4.10xlarge', 154.64, 3.112, '10 Gigabit'),
+																				_1: {
+																					ctor: '::',
+																					_0: A4(_user$project$Main$DB, 'cache.r3.8xlarge', 237, 3.64, '10 Gigabit'),
+																					_1: {ctor: '[]'}
+																				}
 																			}
 																		}
 																	}
@@ -8450,8 +8458,7 @@ var _user$project$Main$dbs = {
 				}
 			}
 		}
-	}
-};
+	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;

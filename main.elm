@@ -50,14 +50,20 @@ fun sum allDbs =
   in
    ( List.foldr fn {remaining = sum , result = []}  allDbs).result
 
+
+
 type alias DB = {
   name: String,
   size: Float,
   price: Float,
   network: String
 }
+
+compareByUnitCost: DB -> DB -> Order
+compareByUnitCost a b = (compare  (a.size / a.price) (b.size / b.price))
+
 dbs : List DB
-dbs = [
+dbs = List.sortWith compareByUnitCost [
   DB "cache.t2.micro" 0.5 0.017 "Low to Moderate",
   DB "cache.t2.small" 1.55 0.034 "Low to Moderate",
   DB "cache.m3.medium" 2.78 0.090 "Moderate",
