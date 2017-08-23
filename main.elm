@@ -165,6 +165,9 @@ view model =
           " $" ++
           (toString (round (24 * (List.foldl costDbs 0 model.breakDown))))
           ++ " (USD Per Day) "
+          ++
+          (toString (round (30 * 24 * (List.foldl costDbs 0 model.breakDown))))
+          ++ " (USD Per Month) "
           )],
         h5 [][text "Disclaimer"],
 
