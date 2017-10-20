@@ -39,16 +39,19 @@ type alias Shit = {
   coins : List DB
  }
 
+-- figure out lowest cost cluster of same class of node
 fun: Float -> List DB -> List DB
-fun sum allDbs =
+fun size allDbs =
   let
-    minSize =  (Maybe.withDefault (DB "cache.t2.micro" 0.5 0.017 "Low to Moderate") (List.head allDbs) ).size
-    fn db m = {
-      remaining = m.remaining - ((toFloat ((if db.size == minSize then  ceiling else floor) (m.remaining / db.size))) * db.size),
-      result = (List.append m.result (List.repeat  ((if db.size == minSize then ceiling else floor) (m.remaining / db.size)) db))
+    sizeClusterToDesiredSize: DB -> {cost:Float, dbs: List DB}
+    sizeClusterToDesiredSize db = {
+      cost = (toFloat (ceiling (size / db.size))) * db.price,
+      dbs = List.repeat (ceiling (size / db.size)) db
     }
+    lowerCost a b = if a.cost < b.cost then a else b
   in
-   ( List.foldr fn {remaining = sum , result = []}  allDbs).result
+    (List.foldr lowerCost  {cost=9999999999, dbs = (List.repeat 1 (DB "cache.t2.micro" 0.5 0.017 "Low to Moderate"))  }   (List.map sizeClusterToDesiredSize allDbs)).dbs
+
 
 
 
