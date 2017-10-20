@@ -8318,33 +8318,32 @@ var _user$project$Main$DB = F4(
 		return {name: a, size: b, price: c, network: d};
 	});
 var _user$project$Main$fun = F2(
-	function (sum, allDbs) {
-		var minSize = A2(
-			_elm_lang$core$Maybe$withDefault,
-			A4(_user$project$Main$DB, 'cache.t2.micro', 0.5, 1.7e-2, 'Low to Moderate'),
-			_elm_lang$core$List$head(allDbs)).size;
-		var fn = F2(
-			function (db, m) {
-				return {
-					remaining: m.remaining - (_elm_lang$core$Basics$toFloat(
-						(_elm_lang$core$Native_Utils.eq(db.size, minSize) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / db.size)) * db.size),
-					result: A2(
-						_elm_lang$core$List$append,
-						m.result,
-						A2(
-							_elm_lang$core$List$repeat,
-							(_elm_lang$core$Native_Utils.eq(db.size, minSize) ? _elm_lang$core$Basics$ceiling : _elm_lang$core$Basics$floor)(m.remaining / db.size),
-							db))
-				};
+	function (size, allDbs) {
+		var lowerCost = F2(
+			function (a, b) {
+				return (_elm_lang$core$Native_Utils.cmp(a.cost, b.cost) < 0) ? a : b;
 			});
+		var sizeClusterToDesiredSize = function (db) {
+			return {
+				cost: _elm_lang$core$Basics$toFloat(
+					_elm_lang$core$Basics$ceiling(size / db.size)) * db.price,
+				dbs: A2(
+					_elm_lang$core$List$repeat,
+					_elm_lang$core$Basics$ceiling(size / db.size),
+					db)
+			};
+		};
 		return A3(
 			_elm_lang$core$List$foldr,
-			fn,
+			lowerCost,
 			{
-				remaining: sum,
-				result: {ctor: '[]'}
+				cost: 9999999999,
+				dbs: A2(
+					_elm_lang$core$List$repeat,
+					1,
+					A4(_user$project$Main$DB, 'cache.t2.micro', 0.5, 1.7e-2, 'Low to Moderate'))
 			},
-			allDbs).result;
+			A2(_elm_lang$core$List$map, sizeClusterToDesiredSize, allDbs)).dbs;
 	});
 var _user$project$Main$dbs = A2(
 	_elm_lang$core$List$sortWith,
